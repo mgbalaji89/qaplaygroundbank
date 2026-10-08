@@ -1,0 +1,12 @@
+{
+    "users": {
+        "overdraft": {
+            "username": "overdraft_user",
+            "passwordEnv": "BANK_PASSWORD"
+        }
+    },
+    "currency": {
+        "locale": "en-US",
+        "code": "USD"
+    }
+}

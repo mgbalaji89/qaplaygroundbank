@@ -8,3 +8,7 @@ node_modules/
 /playwright/.auth/
 
 package-lock.json
+
+#Local settings and reports
+.env
+/reports/

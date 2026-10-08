@@ -1,12 +1,15 @@
 // pages/AccountsOverviewPage.js
 const { BasePage } = require('./BasePage');
 
+// Page Objects for the My Accounts page
 class AccountsOverviewPage extends BasePage {
   constructor(page) {
     super(page);
     this.accountTable = page.locator('#accountTable');
     this.accountRows = page.locator('#accountTable tbody tr');
     this.totalCell = page.locator('#accountTable tfoot td').nth(1);
+    //all the account rows in the table, used by readAccountBalance method
+    this.accountRowItems = page.getByTestId('account-row');
   }
 
   async goto() {
@@ -22,6 +25,20 @@ class AccountsOverviewPage extends BasePage {
       if (cells.length >= 3) {
         out.push({ accountNumber: cells[0].trim(), balance: cells[1].trim(), available: cells[2].trim() });
       }
+    }
+    return out;
+  }
+
+  /** Returns [{name, balance, isOverdrawn}] for each account */
+  async readAccountBalances() {
+    await this.accountRowItems.first().waitFor();
+    const out = [];
+    for (const row of await this.accountRowItems.all()) {
+      out.push({
+        name: (await row.getByTestId('account-row-name').innerText()).trim(),
+        balance: (await row.getByTestId('account-row-balance').innerText()).trim(),
+        isOverdrawn: await row.getByTestId('account-row-overdrawn').isVisible(),
+      });
     }
     return out;
   }
