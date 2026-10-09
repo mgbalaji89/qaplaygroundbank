@@ -1,24 +1,50 @@
-// pages/LoginPage.js
-const { BasePage } = require('BasePage');
+// projects/uiproject/pages/LoginPage.js
 
-class LoginPage extends BasePage {
-  constructor(page) {
-    super(page);
-    this.usernameInput = page.locator('input[name="username"]');
-    this.passwordInput = page.locator('input[name="password"]');
-    this.loginButton = page.locator('input[value="Log In"]');
-    this.forgotLoginLink = page.getByRole('link', { name: 'Forgot login info?' });
-  }
+const { expect } = require('@playwright/test');
 
-  async goto() {
-    await this.page.goto('index.htm');
-  }
+class LoginPage {
 
-  async login(username, password) {
-    await this.usernameInput.fill(username ?? '');
-    await this.passwordInput.fill(password ?? '');
-    await this.loginButton.click();
-  }
+    constructor(page) {
+        this.page = page;
+
+        this.username = page.getByTestId('login-username-input');
+
+        this.password = page.getByTestId('login-password-input');
+
+        this.loginButton = page.getByTestId('login-submit-btn');
+    }
+
+    async goto() {
+        await this.page.goto(
+            'https://qaplayground.com/bank/login',
+            { waitUntil: 'domcontentloaded' }
+        );
+    }
+
+    async login() {
+
+        await this.goto();
+
+        const username = process.env.BANK_USERNAME;
+        const password = process.env.BANK_PASSWORD;
+
+        console.log('BANK_USERNAME:', username);
+        console.log('BANK_PASSWORD:', password);
+
+        if (!username || !password) {
+            throw new Error(
+                'BANK_USERNAME or BANK_PASSWORD is missing. Check your .env file.'
+            );
+        }
+
+        await this.username.fill(username);
+
+        await this.password.fill(password);
+
+        await this.loginButton.click();
+
+        await expect(this.page).toHaveURL(/dashboard/);
+    }
 }
 
-module.exports = { LoginPage };
+module.exports = LoginPage;
