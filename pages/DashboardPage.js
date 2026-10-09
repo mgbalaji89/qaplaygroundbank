@@ -6,7 +6,9 @@ class DashboardPage {
 
     this.dashboardContainer = page.getByTestId('bank-dashboard-page');
     this.welcomeMessage = page.getByTestId('dashboard-welcome-message');
+    this.userInfo = page.getByTestId('sidebar-user-info');
     this.statCards = page.getByTestId('dashboard-stat-cards');
+    this.accountSummaryCards = this.statCards.getByTestId('stat-card');
     this.quickActions = page.getByTestId('quick-actions-section');
     this.recentTransactions = page.getByTestId('recent-transactions-section');
     this.logoutButton = page.getByTestId('topbar-logout-btn');

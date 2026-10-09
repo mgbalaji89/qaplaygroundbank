@@ -38,4 +38,25 @@ test.describe('Dashboard', () => {
     await expect(dashboardPage.logoutButton).toBeVisible();
     await expect(dashboardPage.errorMessage).toHaveCount(0);
   });
+
+  test('Verify account summary/cards are displayed for the logged-in customer', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardPage = new DashboardPage(page);
+    const username = users.standardUser.username;
+
+    await loginPage.open();
+    await loginPage.login(username, users.standardUser.password);
+
+    await expect(page).toHaveURL(/\/bank\/dashboard/);
+    await expect(dashboardPage.dashboardContainer).toBeVisible();
+    await expect(dashboardPage.userInfo).toHaveText(
+      new RegExp(`^\\S*${username}$`)
+    );
+
+    await expect(dashboardPage.statCards).toBeVisible();
+    await expect(dashboardPage.accountSummaryCards).toHaveCount(4);
+    for (const card of await dashboardPage.accountSummaryCards.all()) {
+      await expect(card).toContainText(/[+-]?\$[\d,]+\.\d{2}/);
+    }
+  });
 });
