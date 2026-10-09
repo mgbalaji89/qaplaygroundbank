@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('DASH-02 Test Case', async ({ page }) => {
+test('DASH-02 Test Case Login', async ({ page }) => {
 
     // Try to login
     await page.goto('https://qaplayground.com/bank/login');
