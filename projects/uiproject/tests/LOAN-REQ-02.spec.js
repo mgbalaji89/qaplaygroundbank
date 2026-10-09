@@ -1,12 +1,12 @@
 //Author : Lalith KUmar
 //Module : Apply Loan
-//Requirment ID : LOAN-REQ-01
+//Requirment ID : LOAN-REQ-02
 
 const { test, expect } = require('@playwright/test');
 const { LoanPage } = require('../pages/LoanPage');
 
 test.describe('Loan Management', () => {
-  test('LOAN-01 - Apply Loan page loads for authenticated user', async ({ page }) => {
+  test('LOAN-02 - Loan form displays all required controls', async ({ page }) => {
     const loanPage = new LoanPage(page);
 
     // Navigate to the login page
@@ -44,7 +44,11 @@ test.describe('Loan Management', () => {
     // Verify Apply Loan page
     await expect(loanPage.loanHeader).toBeVisible();
     await expect(page.locator('h1[data-testid="apply-loan-page-title"]')).toHaveText('Apply for a Loan');
-    await test.info().attach('Loan Header Verified', {
+
+    // Open the form before validating its dialog controls
+    await loanPage.openApplyLoanForm();
+    await loanPage.validateApplyLoanForm();
+    await test.info().attach('Loan Form Verified', {
       body: await page.screenshot({ fullPage: true }),
       contentType: 'image/png'
     });
