@@ -1,3 +1,7 @@
+//Author : Lalith KUmar
+//Module : Apply Loan
+//Requirment ID : LOAN-REQ-01
+
 const { test, expect } = require('@playwright/test');
 const { LoanPage } = require('../pages/LoanPage');
 
