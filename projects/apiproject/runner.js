@@ -7,7 +7,13 @@ async function runApiProject(options) {
     console.log(`Environment : ${options.env}`);
     console.log(`Suite       : ${options.suite}`);
 
-    console.log('API project runner started...');
+    console.log('');
+    console.log('Starting API project...');
+    console.log('');
+
+    // API test execution will be implemented here.
+
+    console.log('API project execution completed.');
 }
 
 module.exports = {

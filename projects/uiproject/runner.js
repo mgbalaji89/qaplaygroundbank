@@ -21,14 +21,14 @@ async function runUiProject(options) {
     console.log('Starting Playwright...');
     console.log('');
 
-    const npxCommand = process.platform === 'win32'
-        ? 'npx.cmd'
-        : 'npx';
+    // Resolve the Playwright CLI installed in this project
+    const playwrightCLI = require.resolve('@playwright/test/cli');
 
+    // Launch Playwright through Node.js on any supported OS
     const playwrightProcess = spawn(
-        npxCommand,
+        process.execPath,
         [
-            'playwright',
+            playwrightCLI,
             'test',
             '--config',
             configFile
@@ -48,7 +48,10 @@ async function runUiProject(options) {
                 resolve();
             } else {
                 console.log('');
-                console.log(`Playwright execution failed. Exit code: ${exitCode}`);
+                console.log(
+                    `Playwright execution failed. Exit code: ${exitCode}`
+                );
+
                 reject(
                     new Error(`Playwright failed with exit code ${exitCode}`)
                 );
