@@ -36,4 +36,5 @@ test('Verify dashboard is displayed after successful authentication', async ({ p
   await expect(dashboardPage.recentTransactions).toBeVisible();
   await expect(dashboardPage.logoutButton).toBeVisible();
   await expect(dashboardPage.errorMessage).toHaveCount(0);
+  await page.waitForTimeout(3000);
 });
