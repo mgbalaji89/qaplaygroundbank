@@ -1,3 +1,6 @@
+//Author : Lalith KUmar 
+//Module : Apply Loan
+
 const { BasePage } = require('./BasePage');
 
 class LoanPage extends BasePage {
