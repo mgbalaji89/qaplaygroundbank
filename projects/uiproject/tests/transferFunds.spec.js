@@ -79,7 +79,7 @@ test('Create Account Type As Credit', async({ page }) => {
     
     await page.getByTestId('confirm-transfer-btn').click();
 
-    await page.pause();
+    //await page.pause();
 
     await expect(page.getByTestId('transfer-success-heading')).toHaveText('Transfer Successful');
 
