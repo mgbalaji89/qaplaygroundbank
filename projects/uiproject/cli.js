@@ -1,17 +1,23 @@
 const { runUiProject } = require('./runner');
+const { addGlobalOptions } = require('../../cli/options');
 
 function registerUiProject(program) {
 
-    program
+    const uiCommand = program
         .command('ui')
-        .description('Run UI automation project')
-        .option('--env <environment>', 'Environment to run against', 'qa')
-        .option('--suite <suite>', 'Test suite to execute', 'smoke')
-        .action(async (options) => {
+        .description('Run UI automation project');
 
-            await runUiProject(options);
+    addGlobalOptions(uiCommand);
 
-        });
+    uiCommand
+        .option(
+            '--test-file <file>',
+            'Run a specific UI test file'
+        );
+
+    uiCommand.action(async (options) => {
+        await runUiProject(options);
+    });
 }
 
 module.exports = {
