@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('TM-001 - Verify Transfer Money page opens with required controls', async ({ page }) => {
+test('TM-001 - Verify Transfer Money page opens with required controls @payments', async ({ page }) => {
 
   // Step 1: Open the banking application
   await page.goto('https://qaplayground.com/bank/login', {

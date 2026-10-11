@@ -1,17 +1,17 @@
 const { runApiProject } = require('./runner');
+const { addGlobalOptions } = require('../../cli/options');
 
 function registerApiProject(program) {
 
-    program
+    const apiCommand = program
         .command('api')
-        .description('Run API automation project')
-        .option('--env <environment>', 'Environment to run against', 'qa')
-        .option('--suite <suite>', 'Test suite to execute', 'smoke')
-        .action(async (options) => {
+        .description('Run API automation project');
 
-            await runApiProject(options);
+    addGlobalOptions(apiCommand);
 
-        });
+    apiCommand.action(async (options) => {
+        await runApiProject(options);
+    });
 }
 
 module.exports = {

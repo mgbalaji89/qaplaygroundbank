@@ -1,23 +1,17 @@
 import { test, expect } from '../fixtures/baseFixture.js';
-import bankData from '../data/bankData.json' with { type: 'json' };
+import appConfig from '../config/app.config.js';
 import { VALIDATIONS } from '../utils/constants.js';
 
-test.describe('Secure Bank Login Test', () => {
+test('Verify successful bank login @smoke', async ({ page, loginPage }) => {
+    const environment = process.env.QA_PLAYGROUND_ENV || 'qa';
+    const credentials = appConfig.getUiCredentials(environment);
 
-    test('verify successful login', async ({ page, loginPage }) => {
+    await loginPage.openLoginPage();
 
-        // Navigate to the Secure Bank Login page
-        await loginPage.openLoginPage();
+    await loginPage.login(
+        credentials.username,
+        credentials.password
+    );
 
-        // Login using valid test data
-        await loginPage.login(
-            bankData.standardUser.username,
-            bankData.standardUser.password
-        );
-
-        // Verify user is redirected to dashboard page
-        await expect(page).toHaveURL(VALIDATIONS.DASHBOARD_URL);
-
-    });
-
+    await expect(page).toHaveURL(VALIDATIONS.DASHBOARD_URL);
 });
